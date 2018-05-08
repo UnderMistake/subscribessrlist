@@ -33,7 +33,7 @@ public class SubSsrApplication {
         JSONArray items=JSONArray.fromObject(json);
         int size=items.size();
 
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < size; i++) {
 
             String method = items.getJSONObject(i).getString("method");
             String port = items.getJSONObject(i).getString("port");
@@ -69,7 +69,13 @@ public class SubSsrApplication {
             ssrlist=ssrlist+subUrl;
 
         }
-        return ssrlist.toString();
+        //encode final context
+        try {
+            ssrlist=Base64.getEncoder().encodeToString(ssrlist.getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ssrlist;
     }
 
     /**
